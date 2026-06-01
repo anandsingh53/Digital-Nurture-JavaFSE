@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geolocation Event Mapping</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            padding: 20px;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        #location {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Find Nearby Events</h2>
+
+    <!-- Button -->
+    <button onclick="findLocation()">
+        Find Nearby Events
+    </button>
+
+    <!-- Output -->
+    <p id="location"></p>
+
+    <script>
+        function findLocation() {
+
+            if (navigator.geolocation) {
+
+                let options = {
+                    enableHighAccuracy: true,
+                    timeout: 5000,
+                    maximumAge: 0
+                };
+
+                navigator.geolocation.getCurrentPosition(
+                    showPosition,
+                    showError,
+                    options
+                );
+
+            } else {
+                document.getElementById("location")
+                .innerHTML =
+                "Geolocation is not supported.";
+            }
+        }
+
+        // Show coordinates
+        function showPosition(position) {
+
+            document.getElementById("location")
+            .innerHTML =
+            "Latitude: " +
+            position.coords.latitude +
+            "<br>Longitude: " +
+            position.coords.longitude;
+        }
+
+        // Error handling
+        function showError(error) {
+
+            switch(error.code) {
+
+                case error.PERMISSION_DENIED:
+                    document.getElementById("location")
+                    .innerHTML =
+                    "Permission denied by user.";
+                    break;
+
+                case error.TIMEOUT:
+                    document.getElementById("location")
+                    .innerHTML =
+                    "Request timed out.";
+                    break;
+
+                default:
+                    document.getElementById("location")
+                    .innerHTML =
+                    "Location unavailable.";
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Feedback</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            padding: 20px;
+        }
+
+        img {
+            width: 200px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Event Feedback Form</h2>
+
+    <!-- Phone Number Validation -->
+    <label>Phone Number:</label>
+    <input type="text" id="phone"
+           onblur="validatePhone()">
+
+    <p id="phoneMsg"></p>
+
+    <!-- Event Fee -->
+    <label>Select Event:</label>
+    <select onchange="showFee(this.value)">
+        <option value="">Choose Event</option>
+        <option value="500">Music Event</option>
+        <option value="300">Sports Event</option>
+        <option value="200">Food Festival</option>
+    </select>
+
+    <p id="fee"></p>
+
+    <!-- Submit Button -->
+    <button onclick="submitForm()">
+        Submit Feedback
+    </button>
+
+    <p id="confirm"></p>
+
+    <!-- Double Click Image -->
+    <h3>Double Click Image</h3>
+    <!-- <img src="event.jpg"
+         ondblclick="enlargeImage(this)"
+         alt="Event Image"> -->
+
+    <br><br>
+
+    <!-- Keyboard Event -->
+    <label>Feedback:</label>
+    <textarea id="feedback"
+              onkeyup="countChars()"></textarea>
+
+    <p>Character Count:
+        <span id="count">0</span>
+    </p>
+
+    <script>
+        function validatePhone() {
+            let phone =
+            document.getElementById("phone").value;
+
+            if(phone.length != 10) {
+                document.getElementById("phoneMsg")
+                .innerHTML =
+                "Enter a valid 10-digit number";
+            } else {
+                document.getElementById("phoneMsg")
+                .innerHTML = "Valid Number";
+            }
+        }
+
+        function showFee(fee) {
+            document.getElementById("fee")
+            .innerHTML = "Event Fee: ₹" + fee;
+        }
+
+        function submitForm() {
+            document.getElementById("confirm")
+            .innerHTML =
+            "Feedback Submitted Successfully!";
+        }
+
+        function enlargeImage(img) {
+            img.style.width = "400px";
+        }
+
+        function countChars() {
+            let text =
+            document.getElementById("feedback").value;
+
+            document.getElementById("count")
+            .innerHTML = text.length;
+        }
+    </script>
+
+</body>
+</html>
