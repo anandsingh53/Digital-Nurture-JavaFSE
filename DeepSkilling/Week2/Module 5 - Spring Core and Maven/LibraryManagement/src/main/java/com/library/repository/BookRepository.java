@@ -1,7 +1,9 @@
 package com.library.repository;
 
-public class BookRepository {
-    public void repositoryInfo() {
-        System.out.println("Book Repository Bean Created Successfully.");
-}
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.library.entity.Book;
+
+public interface BookRepository extends JpaRepository<Book, Integer> {
+
 }
