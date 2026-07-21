@@ -1,0 +1,50 @@
+Java Persistence API (JPA): 
+The Java Persistence API provides a specification for persisting, reading, and managing data from your Java object to relational tables in the database.
+Does not contain concrete implementation of the specification.
+Hibernate is one of the implementation of JPA.
+
+Hibernate : 
+ Hibernate is an object-relational mapping solution for Java environments. Object-relational mapping or ORM is the programming technique to map application domain model objects to the relational database tables. 
+
+Hibernate provides a reference implementation of the Java Persistence API that makes it a great choice as an ORM tool with the benefits of loose coupling.
+
+     /* Method to CREATE an employee in the database */
+   public Integer addEmployee(Employee employee){
+      Session session = factory.openSession();
+      Transaction tx = null;
+      Integer employeeID = null;
+      
+      try {
+         tx = session.beginTransaction();
+         employeeID = (Integer) session.save(employee); 
+         tx.commit();
+      } catch (HibernateException e) {
+         if (tx != null) tx.rollback();
+         e.printStackTrace(); 
+      } finally {
+         session.close(); 
+      }
+      return employeeID;
+   }
+
+Spring Data JPA:
+Spring Data is a part of the Spring Framework. The goal of Spring Data repository abstraction is to significantly reduce the amount of boilerplate code required to implement data access layers for various persistence stores.
+
+Spring Data JPA is not a JPA provider. It is a library/framework that adds an extra layer of abstraction on the top of our JPA provider (like Hibernate).
+
+EmployeeRespository.java.
+
+public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
+
+}
+
+
+EmployeeService.java
+
+  @Autowire
+    private EmployeeRepository employeeRepository;
+
+    @Transactional
+    public void addEmployee(Employee employee) {
+        employeeRepository.save(employee);
+    }
