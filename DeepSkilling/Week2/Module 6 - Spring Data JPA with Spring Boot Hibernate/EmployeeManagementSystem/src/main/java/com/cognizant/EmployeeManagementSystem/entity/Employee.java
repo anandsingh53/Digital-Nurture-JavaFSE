@@ -1,9 +1,28 @@
 package com.cognizant.EmployeeManagementSystem.entity;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+@NamedQueries({
+
+        @NamedQuery(
+                name = "Employee.findByEmail",
+                query = "SELECT e FROM Employee e WHERE e.email = :email"
+        ),
+
+        @NamedQuery(
+                name = "Employee.findByName",
+                query = "SELECT e FROM Employee e WHERE e.name = :name"
+        )
+
+})
 @Entity
 @Table(name = "employees")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Employee {
 
     @Id
@@ -15,6 +34,38 @@ public class Employee {
     private String email;
     @ManyToOne
     @JoinColumn(name = "department_id")
+    @JsonBackReference
     private Department department;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
 }
